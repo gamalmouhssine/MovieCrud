@@ -1,0 +1,86 @@
+﻿@model MovieModel
+<h2>@(Model.Id > 0 ? "Edit" : "Create new Movie")</h2>
+<hr />
+<section class="row justfiy-content-between">
+    <div class="col-md-4">
+        <form method="post" asp-action="@(Model.Id > 0 ? "Edit" : "Create")" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label class="text-muted" asp-for="Titel"></label>
+        <input type="text" class="form-control" asp-for="Titel" maxlength="100" />
+        <span asp-validation-for="Titel" class="text-danger"></span>
+    </div>
+     <div class="form-group">
+        <label class="text-muted" asp-for="GenreId"></label>
+        <select class="form-control" asp-for="GenreId" asp-items="@(new SelectList(Model.Genres,"Id","GName"))" >
+            <option  >
+                
+            </option>
+        </select>
+        <span class="text-danger"></span>
+    </div>
+
+     <div class="form-group">
+        <label class="text-muted" asp-for="Year"></label>
+        <input type="number"  class="form-control" asp-for="Year" value="@(Model.Year > 0 ? Model.Year:string.Empty)"  />
+        <span asp-validation-for="Year" class="text-danger"></span>
+    </div>
+
+   <div class="form-group " >
+        <label class="text-muted" asp-for="Rate"></label>
+        <input type="number" class="form-control" asp-for="Rate" max="10" value="@(Model.Rate >  0 ? Model.Rate:string.Empty)"  />
+        <span asp-validation-for="Rate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label class="text-muted" asp-for="Store"></label>
+        <textarea style="resize:none;"  class="form-control" asp-for="Store"  rows="6" value="" ></textarea>      
+<span asp-validation-for="Store" class="text-danger"></span>
+    </div>
+
+   <div class="custom-file">
+        <input type="file" class="custom-file-input" asp-for="Poster" accept=".png,.jpg" />
+            <label class="custom-file-label" asp-for="Poster"  ></label>
+        <span asp-validation-for="Poster" class="text-danger"></span>
+    </div>
+    
+<button type="submit" class="btn btn-primary mt-4" >
+<i class="bi bi-save"></i>
+Save</button>
+<a asp-action="Index"class="btn btn-outline-secondary mt-4">
+<i class="bi bi-trash"></i>
+    Cancel
+</a>
+    
+
+</form>
+    </div>
+    <div class="col-md-4">
+        <div id="post" class="@(Model.Id>0 ? string.Empty:"d-none")">
+            <img src="@(Model.Id> 0 ? $"data:image/*;base64,{Convert.ToBase64String(Model.Poster)}":string.Empty)" alt="Poster" class="img-thumbnail" />
+        </div>
+    </div>
+</section>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+    $(document).ready(function(){
+        $('#Poster').on('change',function(){
+            var selectimg=$(this).val().split('\\').pop();
+            $(this).siblings('label').text(selectimg);
+            var Posterview=$("#post");
+            var image=window.URL.createObjectURL(this.files[0]);
+            Posterview.removeClass('d-none');
+            Posterview.find('img').attr('src',image);
+        });
+        $('#Year').datepicker({
+        format:'yyyy',
+        viewMode:'years',
+        miniViewMode:'years',
+        autoclose:true,
+        endDate:new Date()
+        });
+    });
+</script>}

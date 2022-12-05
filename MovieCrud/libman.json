@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "bootstrap-icons@1.10.2",
+      "destination": "wwwroot/lib/bootstrap-icons/",
+      "files": [
+        "bootstrap-icons.svg",
+        "font/bootstrap-icons.min.css",
+        "font/fonts/bootstrap-icons.woff2",
+        "font/fonts/bootstrap-icons.woff"
+      ]
+    },
+    {
+      "library": "bootstrap-datepicker@1.9.0",
+      "destination": "wwwroot/lib/bootstrap-datepicker/",
+      "files": [
+        "js/bootstrap-datepicker.min.js",
+        "css/bootstrap-datepicker.min.css"
+      ]
+    }
+  ]
+}
